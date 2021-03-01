@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navimap"
+    app:startDestination="@id/home2">
+
+    <fragment
+        android:id="@+id/home2"
+        android:name="com.example.navigationtest.Home"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_home2_to_blueToothSelect"
+            app:destination="@id/blueToothSelect"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_home2_to_dataSet"
+            app:destination="@id/dataSet"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/dataSet"
+        android:name="com.example.navigationtest.DataSet"
+        android:label="fragment_data_set"
+        tools:layout="@layout/fragment_data_set" >
+        <action
+            android:id="@+id/action_dataSet_to_home2"
+            app:destination="@id/home2"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/blueToothSelect"
+        android:name="com.example.navigationtest.BlueToothSelect"
+        android:label="fragment_blue_tooth_select"
+        tools:layout="@layout/fragment_blue_tooth_select" >
+        <action
+            android:id="@+id/action_blueToothSelect_to_home2"
+            app:destination="@id/home2"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+</navigation>

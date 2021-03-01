@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">bayerischen Formel</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome">Grade Calculator</string>
+    <string name="_5_to_100">5 to 100</string>
+    <string name="_100_to_5">100 to 5</string>
+    <string name="covert">Covert</string>
+    <string name="your_score_5_in_total">Your Score, 1 ~ 4</string>
+    <string name="your_score_100_in_total">Your Score, 60 ~ 100</string>
+</resources>

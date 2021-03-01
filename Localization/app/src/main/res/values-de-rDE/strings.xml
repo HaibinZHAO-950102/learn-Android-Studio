@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Lokalisierung</string>
+    <string name="welcome">Willkommen</string>
+    <string name="click">klick</string>
+    <string name="message">Schönen Tag!</string>
+</resources>

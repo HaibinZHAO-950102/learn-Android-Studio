@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navmap"
+    app:startDestination="@id/welcome">
+
+    <fragment
+        android:id="@+id/welcome"
+        android:name="com.example.bayerischenformel.welcome"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcome_to_fivetohundred"
+            app:destination="@id/fivetohundred" />
+        <action
+            android:id="@+id/action_welcome_to_hundredtofive"
+            app:destination="@id/hundredtofive" />
+    </fragment>
+    <fragment
+        android:id="@+id/hundredtofive"
+        android:name="com.example.bayerischenformel.hundredtofive"
+        android:label="fragment_hundredtofive"
+        tools:layout="@layout/fragment_hundredtofive" >
+        <action
+            android:id="@+id/action_hundredtofive_to_fivetohundred"
+            app:destination="@id/fivetohundred" />
+    </fragment>
+    <fragment
+        android:id="@+id/fivetohundred"
+        android:name="com.example.bayerischenformel.fivetohundred"
+        android:label="fragment_fivetohundred"
+        tools:layout="@layout/fragment_fivetohundred" >
+        <action
+            android:id="@+id/action_fivetohundred_to_hundredtofive"
+            app:destination="@id/hundredtofive" />
+    </fragment>
+</navigation>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title">Mengfan</string>
+    <string name="login_msg">Anmelden</string>
+    <string name="version">1.0.1</string>
+    <string name="login_image">Dusseldorf</string>
+    <string name="username">Name</string>
+    <string name="password">Password</string>
+</resources>

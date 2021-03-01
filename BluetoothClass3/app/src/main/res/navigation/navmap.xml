@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navmap"
+    app:startDestination="@id/home2">
+
+    <fragment
+        android:id="@+id/home2"
+        android:name="com.example.bluetoothclass3.Home"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_home2_to_list"
+            app:destination="@id/list" />
+        <action
+            android:id="@+id/action_home2_to_dataReading"
+            app:destination="@id/dataReading" />
+        <action
+            android:id="@+id/action_home2_to_dataSet"
+            app:destination="@id/dataSet" />
+    </fragment>
+    <fragment
+        android:id="@+id/dataReading"
+        android:name="com.example.bluetoothclass3.DataReading"
+        android:label="fragment_data_reading"
+        tools:layout="@layout/fragment_data_reading" >
+        <action
+            android:id="@+id/action_dataReading_to_home2"
+            app:destination="@id/home2" />
+    </fragment>
+    <fragment
+        android:id="@+id/list"
+        android:name="com.example.bluetoothclass3.List"
+        android:label="fragment_list"
+        tools:layout="@layout/fragment_list" >
+        <action
+            android:id="@+id/action_list_to_home2"
+            app:destination="@id/home2" />
+    </fragment>
+    <fragment
+        android:id="@+id/dataSet"
+        android:name="com.example.bluetoothclass3.DataSet"
+        android:label="fragment_data_set"
+        tools:layout="@layout/fragment_data_set" >
+        <action
+            android:id="@+id/action_dataSet_to_home2"
+            app:destination="@id/home2" />
+    </fragment>
+</navigation>

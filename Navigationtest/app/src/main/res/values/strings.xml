@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Navigationtest</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="homepage">Homepage</string>
+    <string name="tobluetoothlist">Connection</string>
+    <string name="todataset">Data Set</string>
+    <string name="back">Back</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="bluetooth_list">BlueTooth List</string>
+</resources>

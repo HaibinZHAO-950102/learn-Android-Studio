@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">UI Demo</string>
+    <string name="box3">S</string>
+    <string name="blank">In Put Percentage</string>
+    <string name="button1">H</string>
+    <string name="button2">M</string>
+    <string name="switch1">Click</string>
+    <string name="buttom3">Confirm</string>
+    <string name="choice1">Google</string>
+    <string name="choice2">Instagram</string>
+    <string name="box1">H</string>
+    <string name="box2">M</string>
+    <string name="todo">TODO</string>
+    <string name="display">Display</string>
+</resources>

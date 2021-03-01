@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AirCase APP</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="button1">BT</string>
+    <string name="button2">Read</string>
+    <string name="button3">DataSet</string>
+</resources>

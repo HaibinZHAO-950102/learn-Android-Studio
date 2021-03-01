@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BluetoothClass2</string>
+    <string name="support">support</string>
+    <string name="is_on">is on</string>
+    <string name="turn_off">turn off</string>
+    <string name="turn_on">turn on</string>
+</resources>

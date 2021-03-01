@@ -1,0 +1,552 @@
+=======================================================================
+=======================================================================
+
+UI设计
+
+界面设计：
+图片名称必须小写字母开头
+图片拖到app/res/drawable里面，***原文件会消失，转移到drawable文件夹里***
+-------------------------------------------------------------------------------------------------------------------------
+文字居中：All Attributes, gravity, center
+-------------------------------------------------------------------------------------------------------------------------
+Imagebutton：app/res右键，new，vector Asset
+用的时候会报错，要在Gradle Scripts/build.gradle(Module: ***)的defaultConfig{ }里加入一句话：
+android.defaultConfig.vectorDrawables.useSupportLibrary = true
+再点右上角Sync Now
+-------------------------------------------------------------------------------------------------------------------------
+让ProgressBar不停运动：Commen Attributes, 选中indeterminate
+
+=======================================================================
+
+功能编写：
+常用的类型：
+TextView, Button, EditText, ProgressBar, SeekBar, RadioGroup, ImageView, CheckBox, RatingBar
+
+-------------------------------------------------------------------------------------------------------------------------
+
+连接变量和控件id
+变量 = findViewById(R.id.变量的ID);
+
+例如
+textView = findViewById(R.id.textView);
+button = findViewById(R.id.button);
+
+-------------------------------------------------------------------------------------------------------------------------
+
+TextView：
+变量.setText("abcd");
+
+-------------------------------------------------------------------------------------------------------------------------
+
+Button:
+变量.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        执行内容;
+    }
+ });
+
+-------------------------------------------------------------------------------------------------------------------------
+
+ImageButton:
+变量.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        执行内容;
+    }
+ });
+
+-------------------------------------------------------------------------------------------------------------------------
+
+EditText:
+字符串变量 = 变量.getText().toString();  
+经常使用Integer.valueOf(字符串变量)，把字符串变成整数，看下面的例子
+
+-------------------------------------------------------------------------------------------------------------------------
+
+ProgressBar:
+变量.setProgress(整数);
+变量.setProgress(Integer.valueOf(字符串));
+
+-------------------------------------------------------------------------------------------------------------------------
+
+SeekBar:
+读取进度
+变量.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        执行内容;
+        // progress是SeekBar的数值，整数。常用String.valueOf(progress)变成字符串
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+        // 一般不用
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        // 一般不用
+    }
+});
+
+设置进度
+变量.setProgress(进度.getValue());
+
+-------------------------------------------------------------------------------------------------------------------------
+
+RadioGroup:
+变量.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        // 常用 if (checkedId == R.id.单个RadioButton变量){执行内容}
+    }
+});
+
+-------------------------------------------------------------------------------------------------------------------------
+
+ImageView:
+imageView.setImageResource(R.drawable.图片名称); // 放在drawable目录下
+
+-------------------------------------------------------------------------------------------------------------------------
+
+CheckBox:
+变量.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+            执行内容；
+        }
+        else {
+            执行内容；
+        }
+    }
+});
+
+-------------------------------------------------------------------------------------------------------------------------
+
+RatingBar：
+变量.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+    @Override
+    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+        执行内容；
+        // 一般用Toast.makeText(getApplicationContext(), String.valueOf(rating),Toast.LENGTH_SHORT).show(); 来短暂显示
+    }
+});
+
+Toast的简便使用方法：
+声明变量
+private Toast toast;
+
+创建函数
+private void TOAST (String s) {
+    if (toast == null) {
+        toast = Toast.makeText(this, s, Toast.LENGTH_SHORT);
+    }
+    else {
+        toast.setText(s);
+    }
+    toast.show();
+}
+
+调用时，只需要
+TOAST(字符串);
+即可
+
+=======================================================================
+=======================================================================
+
+Activity生命周期
+onCreat()
+创建应用
+-------------------------------------------------------------------------------------------------------------------------
+onStart()
+应用出现，但是还没准备好
+-------------------------------------------------------------------------------------------------------------------------
+onResume()
+应用运行、交互
+-------------------------------------------------------------------------------------------------------------------------
+onPause()
+暂停，应用可见但是不能使用。比如切换应用
+-------------------------------------------------------------------------------------------------------------------------
+onStop()
+应用不可见
+-------------------------------------------------------------------------------------------------------------------------
+onDestory()
+某些情况，比如内存不足，会被删掉。
+
+=======================================================================
+=======================================================================
+
+本地化：
+打开app/res/values/strings/strings.xml，右上角有个open editor，打开后进入translations editor
+点小地球可以添加语言，进而app可以根据系统语言来调整字符串内容
+
+=======================================================================
+=======================================================================
+
+ViewModel: 把数据单独存在来的一个类。
+在建立项目的时候选上 Use legacy android.support libraries
+在 app/java/com.example.项目名称 上点击右键，new，Javaclass，输入class名字，比如说MyViewModel，就有一个MyViewModel.java的文件
+把句子改成 public class MyViewModel extends ViewModel，经过自动补充，就可以写东西。
+比如建立一个整数number = 0：
+public class MyViewModel extends ViewModel {
+    public int number = 0;
+}
+
+回到MyActicity.java，建立一个类的对象
+MyViewModel 对象; //比如 MyViewModel myViewModel;
+
+在onCreate里面加上
+对象 = ViewModelProviders.of(this).get(MyViewModel.class); // 把对象和类连接起来
+ViewModelProviders需要额外的import，可以自动补充
+
+就可以使用了。比如在点击button时nummer变化并被展示出来：
+button1.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        myViewModel.number++;   // nummer加1
+        textView.setText(String.valueOf(myViewModel.number)); //展示出来
+    }
+});
+
+好处：数据可以存在别的地方，结构清晰明了
+
+=======================================================================
+=======================================================================
+
+LiveData：从ViewModel直接改变View，就不用写很多控制命令如.setText(String.valueOf(myViewModel.number))
+
+同ViewModel一样先创建一个ViewModel类的子类，比如ViewModelWithLiveData
+然后建立一个私有的变量
+private MutableLiveData<Integer> LikedNumber;
+
+然后建立一个读取变量的函数
+public MutableLiveData<Integer> getLikedNumber() {
+    if(LikedNumber == null) { 				//如果没有值，就设为0
+        LikedNumber = new MutableLiveData<>();
+        LikedNumber.setValue(0);
+    }
+    return LikedNumber;
+}
+
+再建立一个改变变量的函数
+public void addLikedNumber(int n){
+    LikedNumber.setValue(LikedNumber.getValue() + n);
+}
+
+回到MainActicity.java
+建立ViewModelWithLiveData的对象
+ViewModelWithLiveData viewModelWithLiveData;
+
+在onCreat里关联上类：
+viewModelWithLiveData = ViewModelProviders.of(this).get(ViewModelWithLiveData.class);
+
+然后对于.getLikedNumber()使用observer
+viewModelWithLiveData.getLikedNumber().observe(this, new Observer<Integer>() {
+    @Override
+    public void onChanged(@Nullable Integer integer) {	// 发生变化onChanged的时候，就执行内容
+        执行内容;					// 比如 textView.setText(String.valueOf(integer));
+    }
+});
+
+至此LiveData就成了。变量LikedNumber变化时，会自动打印出来。
+
+设置按钮功能：
+button1.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        viewModelWithLiveData.addLikedNumber(1);		// 调用.addLikedNumber(int n)
+    }
+});
+
+=======================================================================
+=======================================================================
+
+DataBinding: 直接将界面和变量绑定在一起，就不用再MainActivity里面写很多东西
+准备工作：
+1. 建立ViewModel类，建立变量、函数
+2. 在Gradle Scripts/build.gradle(Module: ***)的defaultConfig{ }里加入：
+dataBinding {
+    enabled true
+}
+
+点击右上角 Sync Now。
+下面可能会有错误，修复一下即可。
+进入activity_main.xml，点右上角code
+代码左上角有个小灯泡，点击选择Conver to data binding layout
+没有小灯泡的话用alt+enter点击选择Conver to data binding layout
+-------------------------------------------------------------------------------------------------------------------------
+变量直接读取控件
+
+在MainActivity.java里面，在MainActivity类里添加
+MyViewModel myViewModel;    // ViewModel的对象
+ActivityMainBinding binding;      // ActivityMainBinding的对象
+
+在onCreat里面加上
+binding = DataBindingUtil.setContentView(this, R.layout.activity_main);  // 把对象连接起来
+
+下面就不需要写
+变量 = findViewById(R.id.变量的ID);
+
+而是直接可以用
+binding.变量ID  来表示这个控件，例如
+binding.button.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) { }
+});
+
+-------------------------------------------------------------------------------------------------------------------------
+控件直接读取变量
+
+进入activity_main.xml，在
+<data>
+    ......
+</data>
+中间加入变量
+<variable
+    name="data"		//自己起一个名字
+    type="com.example.databinding.MyViewModel" />  //连接到MyViewModel
+
+在下面的控件，比如TextViewl里
+<TextView
+    android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Welcome"			// 这句是显示内容
+    android:textSize="36sp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.215" />
+
+把android:text="Welcome"中的Welcome该成
+android:text="@{String.valueOf(data.number)}" 
+其中在@{ }写代码
+String.valueOf(data.number)是MyViewModel里的number的值
+
+在Button里面加一句话：
+android:onClick="@{()->data.add()}"
+其中android:onClick表示调用onClickListener函数
+在@{ }写代码
+()->用来调用函数data.add()
+
+这样之后
+myViewModel.getNumber().observe(this, new Observer<Integer>() {
+    @Override
+    public void onChanged(@Nullable Integer integer) {
+        binding.textView.setText(String.valueOf(integer));
+    }
+});
+
+ binding.button.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        myViewModel.add();
+    }
+});
+也都不需要了。
+
+在MainActivity.java的onCreat里加入
+binding.setData(myViewModel);
+binding.setLifecycleOwner(this);
+把binding和myViewModel连接起来
+
+=======================================================================
+=======================================================================
+
+Navigation：实现不同页面之间的转换
+右键点击app/java/com.example.项目名字
+以此点击new，Fragment，Fragment(blank)，起个名字，就会有新的app页面产生
+布局页面，可能要在component tree里改成constraintlayout
+在app/res点右键，new，Android Resource File， 起个名字，Resource type选Navigation
+在app/res/navigation/名字.xml里点击左上角小加号，添加刚才做的页面，连接起来，产生action
+回到activity_main.xml，拖入一个Containers里的NavHostFragment，调整
+在页面的.java文件里
+写onActivityCreated类
+在里面写
+getView().findViewById(R.id.按钮ID).
+    setOnClickListener(Navigation.createNavigateOnClickListener(R.id.页面切换的ACTION的ID));
+
+=======================================================================
+=======================================================================
+
+ViewModel在Fragment中的应用
+建立导航页面
+建立DataBindig
+
+在xml文件里把东西绑定进去
+到java文件里，先把onCreatView里的东西都注释掉
+
+连接ViewModel
+MyViewModel myViewModel;
+myViewModel = ViewModelProviders.of(getActivity()).get(MyViewModel.class);
+
+连接DataBinding，类的名字是“Fragment” + 文件名 + “Binding”
+FragmentMainpageBinding binding;
+
+然后
+binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mainpage, container, false);
+binding.setData(myViewModel);
+binding.setLifecycleOwner(getActivity());
+
+然后写函数
+最后的return写
+return binding.getRoot();
+
+
+=======================================================================
+=======================================================================
+
+不体现在界面上的不用private！用public
+
+=======================================================================
+=======================================================================
+
+Bluetooth
+
+在app/manifests/AndroidManifest.xml里， package下面加2句话，获得蓝牙权限
+<uses-permission android:name="android.permission.BLUETOOTH" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+在app/java/com.example.***右键创建类，起名字叫BluetoothController
+里面建立一个对象：
+private BluetoothAdapter bluetoothAdapter;
+以及一个方法
+public BluetoothController() {
+    bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+}
+
+以下还有一些方法
+public boolean isSupportBlueTooth() {	// 检测设备是否支持蓝牙
+    if (bluetoothAdapter != null) {
+        return true;
+    }
+    else  {
+        return false;
+    }
+}
+
+public boolean getBluetoothStatus() {	// 检测蓝牙是否打开
+    assert (bluetoothAdapter != null);
+    return bluetoothAdapter.isEnabled();
+}
+
+public void TurnOnBluetooth (Activity activity, int requestCode) {		// 打开蓝牙
+    Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+    activity.startActivityForResult(intent, requestCode);
+}
+
+public void turnOffBluetooth() {	//关上蓝牙
+    bluetoothAdapter.disable();
+}
+
+
+public void Visible(Context context) {
+    Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+    discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);	// 可被发现的持续时间
+    context.startActivity(discoverableIntent);
+}
+
+public void findDevice() {				// 查找设备
+    assert (bluetoothAdapter != null);
+    bluetoothAdapter.startDiscovery();
+}
+
+public List<BluetoothDevice> getBondedDeviceList() {	// 获取绑定设备
+    return new ArrayList<>(bluetoothAdapter.getBondedDevices());
+}
+
+在MainActivity.java的MainActivity类里写上
+* 不是onCreate之类的
+
+private BluetoothController bluetoothController = new BluetoothController();
+
+public void isSupportBluetooth(View v) {			// 检查支持蓝牙
+    boolean ret = bluetoothController.isSupportBlueTooth();
+    TOAST("support Bluetooth!" + ret);
+}
+
+public void isBluetoothEnable(View v) {			// 检查蓝牙开启状态
+    boolean ret = bluetoothController.getBluetoothStatus();
+    TOAST("Enable Bluetooth!" + ret);
+}
+
+public void requestTurnOnBluetooth(View v) {		// 打开蓝牙
+    bluetoothController.TurnOnBluetooth(this, 0);
+}
+
+public void TurnOffBluetooth(View v) {			// 关上蓝牙
+    bluetoothController.turnOffBluetooth();
+ }
+
+其中TOAST如前文所说
+private void TOAST (String s) {
+    if (toast == null) {
+        toast = Toast.makeText(this, s, Toast.LENGTH_SHORT);
+    }
+    else {
+        toast.setText(s);
+    }
+    toast.show();
+}
+
+然后在xml页面，选择按钮，右边有个onClick，可以直接关联上述函数
+-------------------------------------------------------------------------------------------------------------------------
+接收广播：
+在onCreate里面加上
+IntentFilter intentFilter = new IntentFilter(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED);
+registerReceiver(broadcastReceiver, intentFilter);
+
+在MainActivity里建立函数
+private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1);
+        switch (state) {
+            case BluetoothAdapter.STATE_OFF:
+                TOAST("STATE_OFF");
+                break;
+            case BluetoothAdapter.STATE_ON:
+                TOAST("STATE_ON");
+                break;
+            case
+                BluetoothAdapter.STATE_TURNING_ON:
+                TOAST("STATE_TURNING_ON");
+                break;
+            case
+                BluetoothAdapter.STATE_TURNING_OFF:
+                TOAST("STATE_TURNING_OFF");
+                break;
+            default:
+                TOAST("UNKNOWN_STATE");
+                break;
+        }
+    }
+};
+
+-------------------------------------------------------------------------------------------------------------------------
+查找设备
+
+-------------------------------------------------------------------------------------------------------------------------
+绑定设备
+
+-------------------------------------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
+
+=======================================================================
+=======================================================================
+=======================================================================
+=======================================================================
+=======================================================================
+=======================================================================
+=======================================================================
+=======================================================================

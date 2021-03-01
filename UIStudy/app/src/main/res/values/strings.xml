@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">UI Study</string>
+    <string name="title">Learn UI Design</string>
+    <string name="login_msg">Anmelden</string>
+    <string name="version">1.0.1</string>
+    <string name="login_image">Dusseldorf</string>
+    <string name="username">Name</string>
+    <string name="password">Password</string>
+</resources>
